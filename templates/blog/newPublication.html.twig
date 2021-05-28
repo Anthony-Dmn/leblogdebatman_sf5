@@ -1,0 +1,26 @@
+{# Utilisation du modèle de page "base.html.twig" #}
+{% extends 'base.html.twig' %}
+
+{# Titre de la page #}
+{% block title %}Nouvelle publication{% endblock %}
+
+{# contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+
+        {# Titre h1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Nouvelle Publication</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                {# Affichage du formulaire #}
+                {{ form(form) }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

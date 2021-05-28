@@ -1,0 +1,124 @@
+{# la variable Twig "route" contiendra le nom de la route actuellement chargée #}
+{% set route = app.request.attributes.get('_route') %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# "Nouvelle page" sera le titre par défaut si jamais une page ne défini pas de titre #}
+    <title>{% block title %}Nouvelle Page{% endblock %} - {{ site_name }}</title>
+    {# Inclusion des fichiers CSS généraux du site #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap" rel="stylesheet">
+    {# Inclusion des fichiers CSS individuels des pages qui en ont besoin #}
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+
+    {# Menu principal #}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark main-navbar">
+        <div class="container-fluid">
+
+            {# Logo et titre du site #}
+            <a class="navbar-brand" href="{{ path('main_home') }}">
+                <img src="{{ asset('images/embleme-batman.png') }}" alt="" class="main-navbar-logo">
+                {{ site_name }}
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                {# Paquet de boutons à gauche #}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link{{ route == 'main_home' ? ' active' }}" href="{{ path('main_home') }}"><i class="fas fa-home mx-1"></i>Accueil</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle{{ route == 'blog_publication_list' ? ' active' }}" href="#" id="blog-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-newspaper me-1"></i>Blog
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="blog-dropdown">
+                            <a class="dropdown-item" href="{{ path('blog_publication_list') }}">Publications</a>
+        
+                            {# Bouton vers la création d'une nouvelle publication si l'utilisateur possède le rôle admin #}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('blog_new_publication') }}">Nouvelle Publication</a>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                </ul>
+
+                {# Paquet de boutons à droite #}
+                <ul class="navbar-nav ms-auto me-3">
+
+                    {# si l'utilisateur est connecté #}
+                    {% if app.user %}
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="profil-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user mx-1"></i>{{ app.user.pseudonym }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="profil-dropdown">
+        
+                                <a class="dropdown-item" href="{{ path('main_profil') }}"><i class="fas fa-users-cog me-1"></i>Mon Profil</a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <a class="dropdown-item" href="{{ path('main_logout') }}"><i class="fas fa-sign-out-alt me-1"></i>Déconnexion</a>
+                            </div>
+                        </li>
+
+                    {% else %}  {# Boutons si l'utilisateur n'est pas connecté #}
+
+                        <li class="nav-item">
+                            <a class="nav-link{{ route == 'main_register' ? ' active' }}" href="{{ path('main_register') }}"><i class="fas fa-user-plus mx-1"></i>Inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link{{ route == 'main_login' ? ' active' }}" href="{{ path('main_login') }}"><i class="fas fa-sign-in-alt mx-1"></i>Connexion</a>
+                        </li>
+
+                    {% endif %}
+
+                </ul>
+
+                <form class="d-flex" method="GET" action="{{ path('blog_search') }}">
+                    <input class="form-control me-2" type="search" placeholder="Trouver un article" aria-label="Search" name="q">
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+    {# Affichage des messages flashs de succès s'il y en a #}
+    {% include 'partials/flashes/success.html.twig' %}
+
+    {# Affichage des messages flashs d'erreur s'il y en a #}
+    {% include 'partials/flashes/error.html.twig' %}
+
+    {# Affichage du contenu principal des pages #}
+    {% block body %}{% endblock %}
+
+    {# Inclusions des fichiers JS généraux du site #}
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
+    {# Inclusion des fichiers JS individuels des pages qui en ont besoin #}
+    {% block js %}{% endblock %}
+</body>
+
+</html>

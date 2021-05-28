@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <h1 class="col-12 text-center my-5">Créer un compte</h1>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-md-4 offset-md-4">
+
+                {{ form_start(registrationForm) }}
+
+                    {{ form_errors(registrationForm) }}
+
+                    {{ form_row(registrationForm.email) }}
+
+                    {{ form_row(registrationForm.plainPassword) }}
+
+                    {{ form_row(registrationForm.pseudonym) }}
+
+                    <div class="mb-3">
+                        <div class="g-recaptcha" data-sitekey="{{ google_recaptcha_site_key }}"></div>
+                    </div>
+
+                    {{ form_row(registrationForm.save) }}
+
+                {{ form_end(registrationForm) }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block css %}
+    {# Inclusion du fichier JS permettant de faire fonctionner le recaptcha de Google #}
+    {# Ce fichier doit être dans le head HTML, d'où sont inclusion dans le block "css" #}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+{% endblock %}

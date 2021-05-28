@@ -1,0 +1,98 @@
+{# Utilisation du modèle de page "base.html.twig" #}
+{% extends 'base.html.twig' %}
+
+{# Titre de la page #}
+{% block title %}Accueil{% endblock %}
+
+{# contenu de la page #}
+{% block body %}
+
+    <div class="container-fluid">
+
+        {# Titre h1 #}
+        <div class="row">
+            <h1 class="col-12 text-center my-5">{{ site_name }}</h1>
+        </div>
+
+        {# Contenus lorem ipsum pour habiller un peu l'accueil #}
+        <div class="row">
+            <h2 class="text-center col-12 my-4">Lorem ipsum dolor sit amet consectetur.</h2>
+
+            <p class="col-12 col-md-10 offset-md-1 text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aut cumque dicta dignissimos eum minus molestias nostrum officiis optio quas qui, recusandae sapiente ullam! Accusamus culpa dolorum eius eos ex fugiat harum id iusto, nam possimus praesentium repellendus repudiandae similique unde, veritatis voluptatibus voluptatum? Ab molestiae mollitia qui sequi suscipit.</p>
+        </div>
+
+        {# Affichage d'une cover de Batman #}
+        <div class="row my-5 batman-cover"></div>
+
+        {# Affichage des derniers articles publiés #}
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+
+                {# titre h2 #}
+                <div class="row">
+                    <h2 class="col-12 text-center">Dernières publications</h2>
+                </div>
+
+                {# Articles #}
+                <div class="row">
+
+
+                    {# Si il n'y a pas d'articles #}
+                    {% for article in articles %}
+
+                        <div class="col-12">
+                            <div class="card my-3 bg-black article-card">
+
+                                {# Titre de l'article #}
+                                <div class="card-header">
+                                    <a href="{{ path('blog_publication_view', {slug: article.slug}) }}"><i class="far fa-newspaper me-2"></i>{{ article.title }}</a>
+                                </div>
+
+                                {# Contenu de l'article #}
+                                <div class="card-body">
+                                    <div class="blockquote mb-0">
+                                        <p class="mb-4">{{ article.content|striptags|slice(0,150) }}.... <a href="{{ path('blog_publication_view', {slug: article.slug}) }}">Lire la suite</a></p>
+
+                                        {# Affichage de l'auteur et de la date de publication #}
+                                        <footer class="blockquote-footer">Publié le <strong>{{ article.publicationDate|date('d/m/Y à H\\hi') }}</strong> par <strong>{{ article.author.pseudonym }}</strong></footer>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        <div class="row">
+                            <p class="col-12 text-center alert alert-warning my-4">Aucune publication à afficher.</p>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+
+            <h2 class="text-center col-12 my-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</h2>
+
+            <p class="col-12 col-md-10 offset-md-1 text-center mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis incidunt maiores nobis quisquam rerum! Beatae commodi, deleniti distinctio eos facere iure labore neque odio placeat provident quaerat quas quasi repudiandae sit ut? Ab ad, amet delectus ducimus ea ex illo itaque iure iusto laborum minima mollitia nam, omnis quidem quisquam sit sunt, ut veniam voluptates voluptatibus. Eius eveniet itaque praesentium quisquam reiciendis rem. Ab accusamus aperiam at dicta eius impedit incidunt laudantium magni necessitatibus nesciunt, obcaecati, officiis sit totam. Amet.</p>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block css %}
+
+    {# Le style CSS de l'image de cover est fait ici car on aurait pas pu générer le lien avec asset() dans le fichier styles.css #}
+    <style>
+        .batman-cover{
+            background-image: url('{{ asset('/images/batman-cover.png') }}');
+            background-attachment: fixed;
+            background-size: cover;
+            height: 400px;
+        }
+    </style>
+{% endblock %}

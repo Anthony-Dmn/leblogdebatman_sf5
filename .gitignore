@@ -1,0 +1,31 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
+
+# Ignorer les fichiers des migrations
+/migrations/*.php
+
+# Ignorer le dossier de travail local de Phpstorm (pour ceux qui l'utilise)
+/.idea/
+
+# Ignorer les images uploadés par les utilisateurs
+/public/images/users/*.*
+!/public/images/users/.gitignore

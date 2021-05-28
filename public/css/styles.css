@@ -1,0 +1,80 @@
+/* Toute la page */
+body{
+    background-color: #1A1D45;
+    color: #F5F7F9;
+    font-family: "Roboto", sans-serif;
+}
+
+
+/* Navbar principale */
+.main-navbar{
+    background-color: black !important;
+}
+
+.main-navbar .main-navbar-logo{
+    width: 55px;
+    margin-right: 16px;
+}
+
+
+/* Classes génériques */
+.bg-black{
+    background-color: black;
+}
+
+
+/* Articles */
+.article-card a{
+    text-decoration: none;
+}
+
+
+/* Menus pagination */
+.pagination .page-item .page-link{
+    background-color: black;
+    color: #F5F7F9;
+}
+
+.pagination .page-item.disabled{
+    cursor: not-allowed;
+}
+
+.pagination .page-item.disabled .page-link, .pagination .page-item.active .page-link{
+    color: grey;
+}
+
+.pagination .page-item a.page-link:hover{
+    background-color: #292929;
+}
+
+
+/* Photos de profil */
+.comment-profil-photo{
+    width: 84px;
+    height: 84px;
+}
+
+
+/* Bouton admin commentaires */
+.admin-button-article{
+    width: auto;
+    position: absolute;
+    top: 14px;
+    right: 20px;
+}
+
+
+/* Page profil */
+.profil-infos .list-group-item{
+    color: white;
+}
+
+
+/* Articles */
+.article-content{
+    overflow: hidden;
+}
+
+.article-content img{
+    max-width: 100%;
+}
